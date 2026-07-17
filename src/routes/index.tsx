@@ -1,24 +1,25 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  component: OverviewPage,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function OverviewPage() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <section className="page-hero" data-bg="#f2ede5">
+        <div className="wrap">
+          <p className="eyebrow reveal">FFG Venture Studio</p>
+          <h1 className="reveal d1">
+            Building software companies that serve{" "}
+            <span className="slab-i">nonprofits &amp; associations.</span>
+          </h1>
+          <p className="lede reveal d2">
+            Placeholder overview copy. Final approved copy will be ported from the reference
+            source when it arrives.
+          </p>
+        </div>
+      </section>
+    </>
   );
 }
