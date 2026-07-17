@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 
 const TABS: { to: string; label: string }[] = [
   { to: "/", label: "Overview" },
-  { to: "/vision", label: "Vision" },
-  { to: "/model", label: "Model" },
-  { to: "/platform", label: "Platform" },
+  { to: "/vision", label: "The Vision" },
+  { to: "/model", label: "The Model" },
+  { to: "/platform", label: "The Platform" },
   { to: "/portfolio", label: "Portfolio" },
   { to: "/team", label: "Team" },
-  { to: "/founders", label: "Founders" },
+  { to: "/founders", label: "For Founders" },
 ];
 
 export function Nav() {
@@ -23,66 +23,41 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    setOpen(false);
-  }, [location.pathname]);
+  useEffect(() => { setOpen(false); }, [location.pathname]);
 
   return (
-    <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
-      <div className="wrap">
-        <Link to="/" className="brand">
-          <img src="/assets/ffg-mark.png" alt="" className="mark" />
-          <div className="brand-text">
-            <span className="name">Foundry for Good</span>
-            <span className="sub">Venture Studio</span>
-          </div>
+    <header className={`nav ${scrolled ? "scrolled" : ""}`} id="nav">
+      <div className="wrap nav-inner">
+        <Link to="/" className="brand" aria-label="Foundry for Good Venture Studio: Home">
+          <span className="brand-mark"><img src="/assets/ffg-mark.svg" alt="" width={38} height={38} /></span>
+          <span className="brand-stack">
+            <span className="b-name">Foundry for Good</span>
+            <span className="b-sub">Venture Studio</span>
+          </span>
         </Link>
-
-        <div className="nav-tabs">
+        <nav className="nav-links" aria-label="Primary">
           {TABS.map((t) => (
-            <Link
-              key={t.to}
-              to={t.to}
-              className={location.pathname === t.to ? "active" : ""}
-            >
+            <Link key={t.to} to={t.to} className={location.pathname === t.to ? "active" : ""}>
               {t.label}
             </Link>
           ))}
-        </div>
-
-        <Link to="/founders" className="btn btn-orange nav-cta">
-          Become a Venture Lead <span className="arrow">→</span>
+        </nav>
+        <Link to="/founders" className="nav-cta">
+          Become a Venture Lead
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M3.5 8h9M9 4.5l3.5 3.5L9 11.5"></path></svg>
         </Link>
-
-        <button
-          className="hamburger"
-          aria-label="Toggle menu"
-          onClick={() => setOpen((o) => !o)}
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            {open ? (
-              <path d="M6 6l12 12M18 6L6 18" />
-            ) : (
-              <path d="M4 7h16M4 12h16M4 17h16" />
-            )}
-          </svg>
+        <button className="mobile-toggle" aria-label={open ? "Close menu" : "Open menu"} onClick={() => setOpen((o) => !o)}>
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M3 6h14M3 10h14M3 14h14"></path></svg>
         </button>
       </div>
-
       <div className={`mobile-menu ${open ? "open" : ""}`}>
         {TABS.map((t) => (
-          <Link
-            key={t.to}
-            to={t.to}
-            className={location.pathname === t.to ? "active" : ""}
-          >
+          <Link key={t.to} to={t.to} className={location.pathname === t.to ? "active" : ""}>
             {t.label}
           </Link>
         ))}
-        <Link to="/founders" className="btn btn-orange">
-          Become a Venture Lead <span className="arrow">→</span>
-        </Link>
+        <Link to="/founders" className="nav-cta">Become a Venture Lead</Link>
       </div>
-    </nav>
+    </header>
   );
 }

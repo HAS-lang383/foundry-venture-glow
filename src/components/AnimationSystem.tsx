@@ -2,95 +2,95 @@ import { useEffect } from "react";
 import { useLocation } from "@tanstack/react-router";
 
 /**
- * Global animation system:
- * - Scroll reveal via IntersectionObserver (.reveal / .reveal-left / .reveal-right)
- * - Stat counters (data-target, animates once when in view)
- * - Scroll color morph based on data-bg on sections
- * - 3s fallback: reveal all if nothing has revealed
+ * Global animations from the reference vs.js:
+ * - .visible reveal via IntersectionObserver
+ * - stat counters on #statrow when in view
+ * - body background-color morph based on section[data-bg]
+ * - 3s fallback: reveal all + snap counters if observers never fire
  */
 export function AnimationSystem() {
   const location = useLocation();
 
   useEffect(() => {
-    // --- Scroll reveal ---
-    const revealables = Array.from(
+    // reveal
+    const els = Array.from(
       document.querySelectorAll<HTMLElement>(".reveal, .reveal-left, .reveal-right")
     );
-    let revealedAny = false;
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           if (e.isIntersecting) {
-            e.target.classList.add("is-visible");
-            revealedAny = true;
+            e.target.classList.add("visible");
             io.unobserve(e.target);
           }
         }
       },
       { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
     );
-    revealables.forEach((el) => io.observe(el));
+    els.forEach((el) => io.observe(el));
 
-    const fallbackTimer = window.setTimeout(() => {
-      if (!revealedAny) {
-        revealables.forEach((el) => el.classList.add("is-visible"));
+    // stat counters
+    const statrow = document.getElementById("statrow");
+    let cio: IntersectionObserver | null = null;
+    if (statrow) {
+      let done = false;
+      cio = new IntersectionObserver(
+        (es) => {
+          for (const e of es) {
+            if (!e.isIntersecting || done) continue;
+            done = true;
+            statrow.querySelectorAll<HTMLElement>(".counter").forEach((el) => {
+              const t = parseInt(el.getAttribute("data-target") || "0", 10) || 0;
+              let start: number | null = null;
+              const step = (ts: number) => {
+                if (start === null) start = ts;
+                const k = Math.min((ts - start) / 1200, 1);
+                el.textContent = String(Math.round(t * (1 - Math.pow(1 - k, 3))));
+                if (k < 1) requestAnimationFrame(step);
+              };
+              requestAnimationFrame(step);
+            });
+            cio!.disconnect();
+          }
+        },
+        { threshold: 0.3 }
+      );
+      cio.observe(statrow);
+    }
+
+    // color morph
+    const tinted = Array.from(document.querySelectorAll<HTMLElement>("section[data-bg]"));
+    const updateBg = () => {
+      const mid = window.innerHeight * 0.5;
+      for (const s of tinted) {
+        const r = s.getBoundingClientRect();
+        if (r.top <= mid && r.bottom >= mid) {
+          const bg = s.getAttribute("data-bg");
+          if (bg) document.body.style.backgroundColor = bg;
+          return;
+        }
+      }
+    };
+    window.addEventListener("scroll", updateBg, { passive: true });
+    window.addEventListener("resize", updateBg);
+    updateBg();
+
+    // fallback
+    const fb = window.setTimeout(() => {
+      if (document.querySelectorAll(".reveal.visible,.reveal-left.visible,.reveal-right.visible").length === 0) {
+        document.querySelectorAll(".reveal,.reveal-left,.reveal-right").forEach((el) => el.classList.add("visible"));
+        document.querySelectorAll<HTMLElement>(".counter").forEach((el) => {
+          el.textContent = el.getAttribute("data-target") || "0";
+        });
       }
     }, 3000);
 
-    // --- Stat counters ---
-    const stats = Array.from(document.querySelectorAll<HTMLElement>("[data-target]"));
-    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
-    const statIo = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (!e.isIntersecting) continue;
-          const el = e.target as HTMLElement;
-          const target = Number(el.dataset.target || "0");
-          const start = performance.now();
-          const duration = 1200;
-          const tick = (now: number) => {
-            const p = Math.min(1, (now - start) / duration);
-            const val = Math.round(target * easeOutCubic(p));
-            el.textContent = val.toLocaleString();
-            if (p < 1) requestAnimationFrame(tick);
-          };
-          requestAnimationFrame(tick);
-          statIo.unobserve(el);
-        }
-      },
-      { threshold: 0.3 }
-    );
-    stats.forEach((el) => statIo.observe(el));
-
-    // --- Scroll color morph ---
-    const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-bg]"));
-    let ticking = false;
-    const updateBg = () => {
-      ticking = false;
-      const mid = window.innerHeight / 2;
-      for (const s of sections) {
-        const r = s.getBoundingClientRect();
-        if (r.top <= mid && r.bottom >= mid) {
-          const bg = s.dataset.bg;
-          if (bg) document.body.style.backgroundColor = bg;
-          break;
-        }
-      }
-    };
-    const onScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(updateBg);
-      }
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    updateBg();
-
     return () => {
       io.disconnect();
-      statIo.disconnect();
-      window.clearTimeout(fallbackTimer);
-      window.removeEventListener("scroll", onScroll);
+      cio?.disconnect();
+      window.removeEventListener("scroll", updateBg);
+      window.removeEventListener("resize", updateBg);
+      window.clearTimeout(fb);
     };
   }, [location.pathname]);
 

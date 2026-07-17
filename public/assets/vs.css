@@ -1,9 +1,3 @@
-@import "tailwindcss" source(none);
-@source "../src";
-@import "tw-animate-css";
-
-@custom-variant dark (&:is(.dark *));
-
 /* ==========================================================================
    FFG VENTURE STUDIO — shared stylesheet (multi-page micro-site)
    Antler structure × Atomic restraint × FFG navy & orange
@@ -22,8 +16,9 @@
   --r-md:14px; --r-lg:20px; --r-xl:28px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;overflow-x:hidden}
+html{scroll-behavior:smooth}
 body{font-family:var(--font);color:var(--text);background:var(--bg);line-height:1.65;font-size:16.5px;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background-color .9s ease}
+html{overflow-x:hidden}
 ::selection{background:var(--orange);color:#fff}
 a{color:inherit}
 img{display:block;max-width:100%}
@@ -70,7 +65,7 @@ img{display:block;max-width:100%}
 @media(max-width:720px){.topbar .tb-hide{display:none}}
 
 /* ==========================================================================
-   NAV
+   NAV — kept from the approved site, extended for multi-page tabs
    ========================================================================== */
 .nav{z-index:120;background:var(--navy);border-bottom:1px solid #ffffff0f;transition:all .25s;position:sticky;top:0}
 .nav.scrolled{-webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);background:#16253aeb;border-bottom:1px solid #ffffff14}
@@ -79,9 +74,9 @@ img{display:block;max-width:100%}
 .brand-mark img{object-fit:contain;width:38px;height:38px}
 .brand-stack{display:flex;flex-direction:column;line-height:1.1}
 .b-name{font-family:var(--font-caps);color:#fff;font-size:19px;font-weight:700;letter-spacing:-.01em}
-.b-sub{font-family:var(--mono);color:#ffffffcc;font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;margin-top:3px}
+.b-sub{font-family:var(--mono);color:var(--orange);font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;margin-top:3px}
 .nav-links{align-items:center;gap:2px;display:flex}
-.nav-links a{font-family:var(--font-caps);color:#fff;border-radius:8px;padding:8px 13px;font-size:14.5px;font-weight:600;text-decoration:none;transition:all .15s;position:relative}
+.nav-links a{color:#ffffffd9;border-radius:8px;padding:8px 13px;font-size:14.5px;font-weight:500;text-decoration:none;transition:all .15s;position:relative}
 .nav-links a:hover{color:var(--orange);background:#f37b4e1f}
 .nav-links a.active{color:#fff}
 .nav-links a.active::after{content:"";position:absolute;left:13px;right:13px;bottom:0;height:2px;background:var(--orange);border-radius:2px}
@@ -99,7 +94,7 @@ img{display:block;max-width:100%}
 @media(max-width:1040px){.nav-links,.nav .nav-cta{display:none}.mobile-toggle{display:inline-flex}.mobile-menu .nav-cta{display:inline-flex}}
 
 /* ==========================================================================
-   HERO
+   HERO — original full-bleed video, kept for its wow (Overview page)
    ========================================================================== */
 .hero{position:relative;min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;overflow:hidden;padding:clamp(80px,10vh,140px) 0}
 .hero-bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -114,7 +109,7 @@ img{display:block;max-width:100%}
 .star-orange{color:var(--orange)}
 
 /* ==========================================================================
-   PAGE HERO
+   PAGE HERO — interior pages (no video), navy band
    ========================================================================== */
 .page-hero{position:relative;background:var(--navy);color:#fff;overflow:hidden;padding:clamp(96px,13vh,168px) 0 clamp(64px,8vw,104px)}
 .page-hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1.3px,transparent 1.3px);background-size:26px 26px;-webkit-mask-image:radial-gradient(680px 560px at 82% 20%,#000 0%,transparent 72%);mask-image:radial-gradient(680px 560px at 82% 20%,#000 0%,transparent 72%)}
@@ -129,7 +124,7 @@ img{display:block;max-width:100%}
 .page-hero .ph-crumb a:hover{color:var(--orange)}
 
 /* ==========================================================================
-   STATS
+   STATS — "best place on the planet" analogue
    ========================================================================== */
 .beststats{background:var(--navy-deep);color:#fff;position:relative;overflow:hidden;padding:clamp(90px,10vw,150px) 0}
 .beststats .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(40px,6vw,90px);align-items:center;position:relative}
@@ -150,7 +145,7 @@ img{display:block;max-width:100%}
 @media(max-width:980px){.beststats .wrap{grid-template-columns:1fr}.star-side{order:-1}.star3d{width:180px}}
 
 /* ==========================================================================
-   THESIS
+   THESIS — FURTHER: for Good typographic moment
    ========================================================================== */
 .thesis{padding:clamp(100px,12vw,180px) 0 clamp(70px,8vw,120px);text-align:left;background:transparent;position:relative;overflow:hidden}
 .thesis::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(31,53,83,.10) 1.3px,transparent 1.3px);background-size:26px 26px;-webkit-mask-image:radial-gradient(700px 600px at 18% 30%,#000 0%,transparent 70%);mask-image:radial-gradient(700px 600px at 18% 30%,#000 0%,transparent 70%)}
@@ -164,14 +159,14 @@ img{display:block;max-width:100%}
 .thesis p{max-width:62ch;font-size:clamp(17px,1.4vw,21px);color:var(--text-body);margin-top:44px}
 
 /* ==========================================================================
-   OUR WORK — photo carousel
+   OUR WORK — Atomic-style photo carousel
    ========================================================================== */
 .wstrip{background:transparent;padding:6px 0 clamp(70px,8vw,110px);position:relative}
 .wstrip-controls{display:flex;justify-content:flex-end;gap:10px;margin-bottom:22px}
 .wcarousel{display:flex;gap:22px;overflow-x:auto;scroll-behavior:auto;scrollbar-width:none;-ms-overflow-style:none;padding:6px calc(max(0px,(100% - 1360px)/2) + 40px) 10px}
 .wcarousel::-webkit-scrollbar{display:none}
 @media(max-width:720px){.wcarousel{padding-left:22px;padding-right:22px}}
-.workhero{position:relative;background:url('/assets/hero-team.jpg') center/cover no-repeat;padding:clamp(110px,14vw,200px) 0}
+.workhero{position:relative;background:url('hero-team.jpg') center/cover no-repeat;padding:clamp(110px,14vw,200px) 0}
 @media(min-width:980px){.workhero{background-attachment:fixed}}
 .workhero::before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(22,37,56,.9) 25%,rgba(22,37,56,.55) 100%)}
 .workhero .wrap{position:relative;z-index:2}
@@ -192,7 +187,7 @@ img{display:block;max-width:100%}
 .wfoot .wmetric{border-top:1px solid var(--cream-line);padding-top:12px;font-weight:700;font-size:13.5px;color:var(--navy)}
 
 /* ==========================================================================
-   SECTION HEAD
+   SECTION HEAD pattern
    ========================================================================== */
 .shead{margin-bottom:clamp(44px,5vw,72px)}
 .shead .eyebrow{color:var(--navy);margin-bottom:26px}
@@ -203,7 +198,7 @@ img{display:block;max-width:100%}
 .shead.split .lede{margin-top:0;margin-bottom:6px;max-width:44ch}
 
 /* ==========================================================================
-   APPROACH
+   APPROACH — 4 phases, staggered
    ========================================================================== */
 .approach{padding:clamp(90px,10vw,150px) 0;background:transparent;position:relative}
 .stack{display:grid;gap:24px}
@@ -224,7 +219,7 @@ img{display:block;max-width:100%}
 @media(max-width:860px){.spanel{grid-template-columns:1fr}.spanel-img{order:-1;min-height:200px}}
 
 /* ==========================================================================
-   PEOPLE
+   PEOPLE — kept verbatim from the approved site
    ========================================================================== */
 .people{padding:clamp(20px,3vw,40px) 0 clamp(90px,10vw,150px);background:transparent;position:relative;overflow:hidden}
 .systems-team-section{margin-top:56px}
@@ -247,7 +242,7 @@ img{display:block;max-width:100%}
 @media(max-width:580px){.systems-team-grid{grid-template-columns:1fr;gap:28px}}
 
 /* ==========================================================================
-   PORTFOLIO
+   PORTFOLIO — Atomic carousel analogue
    ========================================================================== */
 .portfolio{padding:clamp(90px,10vw,150px) 0;background:transparent;border-top:1px solid var(--cream-line);position:relative;overflow:hidden}
 .car-controls{display:flex;gap:10px}
@@ -286,7 +281,7 @@ img{display:block;max-width:100%}
 @media(max-width:580px){.pf-grid{grid-template-columns:1fr}}
 
 /* ==========================================================================
-   OPERATING SYSTEM
+   OPERATING SYSTEM — six advantages, photo bento (dark)
    ========================================================================== */
 .os{background:var(--navy);color:#fff;padding:clamp(90px,10vw,150px) 0}
 .os .shead .eyebrow,.os .shead h2{color:#fff}
@@ -317,6 +312,7 @@ img{display:block;max-width:100%}
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
 .chip{font-family:var(--mono);font-size:12px;letter-spacing:.06em;border:1.5px solid var(--navy);color:var(--navy);border-radius:999px;padding:8px 18px;font-weight:500}
 @media(max-width:860px){.studio-cols{grid-template-columns:1fr}}
+/* offers */
 .offers{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:clamp(56px,6vw,84px)}
 .offer{background:var(--navy);color:#fff;border-radius:var(--r-lg);padding:34px 32px 38px;position:relative;overflow:hidden}
 .offer::after{content:"✳";position:absolute;right:-18px;bottom:-34px;font-size:120px;color:rgba(243,123,78,.18);line-height:1;animation:spin-slow 32s linear infinite}
@@ -324,6 +320,7 @@ img{display:block;max-width:100%}
 .offer .oval{font-family:var(--font-display);font-style:italic;font-weight:500;font-size:clamp(28px,2.4vw,38px);line-height:1.1;margin-bottom:14px}
 .offer p{font-size:14.5px;color:#e8e2d8b3;position:relative;z-index:2}
 @media(max-width:860px){.offers{grid-template-columns:1fr}}
+/* advantage */
 .advantage{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,80px);align-items:start;border-top:1px solid var(--cream-line);padding-top:clamp(44px,5vw,64px)}
 .advantage h3{font-family:var(--font-display);font-size:clamp(28px,3vw,42px);font-weight:600;color:var(--navy);line-height:1.08}
 .advantage h3 em{font-style:italic;color:var(--orange)}
@@ -334,7 +331,7 @@ img{display:block;max-width:100%}
 @media(max-width:860px){.advantage{grid-template-columns:1fr}}
 
 /* ==========================================================================
-   QUOTES
+   QUOTES — Antler last-page analogue
    ========================================================================== */
 .quotes{background:var(--navy-deep);color:#fff;padding:clamp(100px,11vw,170px) 0;text-align:center;position:relative;overflow:hidden}
 .quotes::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 500px at 50% 120%,rgba(243,123,78,.14),transparent 65%)}
@@ -356,7 +353,7 @@ img{display:block;max-width:100%}
 .qtab .qname span{font-size:13px;color:#e8e2d899}
 
 /* ==========================================================================
-   COHORT + PARTNER
+   COHORT CTA + PARTNER
    ========================================================================== */
 .cohort{background:linear-gradient(120deg,var(--orange) 0%,var(--orange-deep) 100%);color:#fff;padding:clamp(80px,9vw,130px) 0;text-align:center;position:relative;overflow:hidden}
 .cohort-star{position:absolute;right:-90px;top:-90px;width:340px;height:340px;filter:brightness(0) invert(1);opacity:.16;transform:rotate(12deg);pointer-events:none}
@@ -364,7 +361,8 @@ img{display:block;max-width:100%}
 .cohort .eyebrow::before{background:#fff}
 .cohort h2{font-family:var(--font-display);font-size:clamp(38px,5vw,72px);font-weight:600;letter-spacing:-.015em;line-height:1.02;margin-bottom:22px}
 .cohort h2 em{font-style:italic}
-.cohort p{max-width:56ch;margin:0 auto 40px;font-size:clamp(16.5px,1.3vw,19px);color:#ffffffd9}
+.cohort p{max-width:56ch;margin:0 auto 40px;font-size:clamp(16.5px,1.3vw,19px);color:#fff2}
+.cohort p{color:#ffffffd9}
 .cohort .btn{background:#fff;color:var(--orange-deep)}
 .cohort .btn:hover{background:var(--navy);color:#fff}
 .partner{background:transparent;padding:clamp(90px,10vw,150px) 0;text-align:center;position:relative;overflow:hidden}
@@ -374,7 +372,7 @@ img{display:block;max-width:100%}
 .partner-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
 /* ==========================================================================
-   RICH CONTENT
+   RICH CONTENT — informative blocks (Digital Tabby analogue)
    ========================================================================== */
 .rich{padding:clamp(76px,9vw,130px) 0;position:relative;overflow:hidden}
 .rich.tight{padding:clamp(56px,7vw,96px) 0}
@@ -388,6 +386,7 @@ img{display:block;max-width:100%}
 .prose a.inline{color:var(--orange-deep);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px;font-weight:600}
 .prose a.inline:hover{color:var(--orange)}
 
+/* two-column feature rows */
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,80px);align-items:center}
 .frow + .frow{margin-top:clamp(56px,6vw,90px)}
 .frow.flip .frow-media{order:2}
@@ -399,6 +398,7 @@ img{display:block;max-width:100%}
 .frow-body p:first-of-type{margin-top:0}
 @media(max-width:860px){.frow{grid-template-columns:1fr;gap:28px}.frow.flip .frow-media{order:0}}
 
+/* numbered steps */
 .steps{display:grid;gap:16px}
 .step{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:start;background:#fff;border:1px solid var(--cream-line);border-radius:var(--r-lg);padding:28px 30px}
 .step .step-n{font-family:var(--font-display);font-style:italic;font-weight:500;font-size:clamp(30px,3vw,44px);color:var(--orange);line-height:1}
@@ -406,6 +406,7 @@ img{display:block;max-width:100%}
 .step p{font-size:15.5px;color:var(--text-body);line-height:1.62;max-width:64ch}
 @media(max-width:560px){.step{grid-template-columns:1fr;gap:8px;padding:22px 22px}}
 
+/* big legitimacy number strip */
 .factstrip{background:var(--navy-deep);color:#fff;padding:clamp(64px,7vw,104px) 0;position:relative;overflow:hidden}
 .factstrip::after{content:"";position:absolute;inset:0;background:radial-gradient(700px 460px at 88% 10%,rgba(243,123,78,.16),transparent 62%);pointer-events:none}
 .factstrip .wrap{position:relative;z-index:2}
@@ -417,6 +418,7 @@ img{display:block;max-width:100%}
 @media(max-width:860px){.factgrid{grid-template-columns:1fr 1fr;gap:34px 24px}}
 @media(max-width:460px){.factgrid{grid-template-columns:1fr}}
 
+/* card grid (definition / value cards) */
 .cardgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .cardgrid.two{grid-template-columns:repeat(2,1fr)}
 .dcard{background:#fff;border:1px solid var(--cream-line);border-radius:var(--r-lg);padding:32px 30px;box-shadow:0 18px 40px -34px rgba(31,53,83,.4)}
@@ -425,6 +427,7 @@ img{display:block;max-width:100%}
 .dcard p{font-size:15px;color:var(--text-body);line-height:1.62}
 @media(max-width:920px){.cardgrid,.cardgrid.two{grid-template-columns:1fr}}
 
+/* FAQ */
 .faq{display:grid;gap:12px;max-width:900px}
 .faq-item{background:#fff;border:1px solid var(--cream-line);border-radius:var(--r-md);overflow:hidden}
 .faq-q{width:100%;text-align:left;background:transparent;border:0;cursor:pointer;padding:24px 26px;display:flex;align-items:center;justify-content:space-between;gap:20px;font-family:var(--font-display);font-weight:600;font-size:clamp(17px,1.5vw,21px);color:var(--navy)}
@@ -434,6 +437,7 @@ img{display:block;max-width:100%}
 .faq-a p{padding:0 26px 24px;font-size:16px;color:var(--text-body);line-height:1.7;max-width:70ch}
 .faq-item.open .faq-a{max-height:420px}
 
+/* logo wall — all portfolio brands blended into one composition */
 .logowall{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .logowall .lw{background:#fff;border-radius:14px;min-height:80px;display:flex;align-items:center;justify-content:center;padding:12px 18px;box-shadow:0 18px 40px -26px rgba(0,0,0,.6)}
 .logowall .lw img{max-height:34px;max-width:82%;width:auto;object-fit:contain}
@@ -441,7 +445,7 @@ img{display:block;max-width:100%}
 .logowall .lw-studio img{height:42px;filter:brightness(0) invert(1)}
 
 /* ==========================================================================
-   FLOATING DECORATIONS
+   ZEFFY-STYLE FLOATING DECORATIONS
    ========================================================================== */
 .deco{position:absolute;pointer-events:none;z-index:1}
 img.deco-star{width:44px;height:44px;animation:bob 7s ease-in-out infinite alternate,spin-slow 46s linear infinite}
