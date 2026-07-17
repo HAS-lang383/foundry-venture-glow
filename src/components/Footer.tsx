@@ -2,35 +2,48 @@ import { Link } from "@tanstack/react-router";
 
 export function Footer() {
   return (
-    <footer className="footer">
+    <footer id="contact">
       <div className="wrap">
-        <div>
+        <div className="foot-grid">
           <div className="foot-brand">
-            <img src="/assets/ffg-mark.png" alt="" width={36} height={36} />
-            Foundry for Good
+            <Link className="brand" to="/">
+              <span className="brand-mark"><img src="/assets/ffg-mark.svg" alt="" width={38} height={38} /></span>
+              <span className="brand-stack">
+                <span className="b-name">Foundry for Good</span>
+                <span className="b-sub">Venture Studio</span>
+              </span>
+            </Link>
+            <p>A venture studio building the next generation of companies for the nonprofit and association economy.</p>
           </div>
-          <p style={{ color: "#a8b3c4", maxWidth: 360 }}>
-            A venture studio building software companies that serve nonprofits and associations.
-          </p>
+          <div className="foot-col">
+            <h4>Studio</h4>
+            <ul>
+              <li><Link to="/vision">The Vision</Link></li>
+              <li><Link to="/model">The Model</Link></li>
+              <li><Link to="/platform">The Platform</Link></li>
+              <li><Link to="/portfolio">Portfolio</Link></li>
+            </ul>
+          </div>
+          <div className="foot-col">
+            <h4>Get involved</h4>
+            <ul>
+              <li><Link to="/founders">For Founders</Link></li>
+              <li><Link to="/team">Team &amp; Advisors</Link></li>
+              <li><a href="https://www.foundryforgood.com/lets-chat/" target="_blank" rel="noopener noreferrer">Start a conversation</a></li>
+            </ul>
+          </div>
+          <div className="foot-col">
+            <h4>Foundry for Good</h4>
+            <ul>
+              <li><a href="https://www.foundryforgood.com/" target="_blank" rel="noopener noreferrer">Main site</a></li>
+              <li><a href="https://www.foundryforgood.com/portfolio/" target="_blank" rel="noopener noreferrer">Full portfolio</a></li>
+              <li><a href="https://careers.foundryforgood.com/" target="_blank" rel="noopener noreferrer">Careers</a></li>
+            </ul>
+          </div>
         </div>
-        <div>
-          <h4>Studio</h4>
-          <Link to="/vision">Vision</Link>
-          <Link to="/model">Model</Link>
-          <Link to="/platform">Platform</Link>
-          <Link to="/portfolio">Portfolio</Link>
-        </div>
-        <div>
-          <h4>People</h4>
-          <Link to="/team">Team</Link>
-          <Link to="/founders">Founders</Link>
-          <a href="https://foundryforgood.co" target="_blank" rel="noreferrer">
-            Foundry for Good ↗
-          </a>
-        </div>
-        <div className="fine">
-          <span>© {new Date().getFullYear()} Foundry for Good</span>
-          <span>FFG Venture Studio</span>
+        <div className="foot-bottom">
+          <span>© 2026 Foundry for Good. All rights reserved.</span>
+          <span><em>Building for the missions that matter.</em></span>
         </div>
       </div>
     </footer>
